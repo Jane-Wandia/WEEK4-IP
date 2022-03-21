@@ -88,23 +88,38 @@ ul li a:hover{
 
 }
 .box img{
-    height: 100px;
+    height: 140px;
     display: block;
     margin: auto;
     padding: 10px;
 }
-/*our clients*/
-.client-container{
-    position: relative;
+/*about us*
+.about{
+    width: 100%;
+    padding: 78px opx;
+    background-color: blanchedalmond;
 }
-#client{
+.about img{
+    height: auto;
+    width: 420px;
+}
+.about-text{
+    width: 550px;
+}
+.main{
+    width: 1130px;
+    max-width: 95%;
+    margin: 0 auto;
     display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
-.client-item{
-    width: 120px;
+.about-text h1{
+    color: red;
+    font-size: 80px;
+    text-transform: capitalize;
+    margin-bottom: 20px;
 }
-
-
 /*utility class*/
 .h-primary{
     padding: 13px;
@@ -119,8 +134,8 @@ ul li a:hover{
 }
 .btn{
     font-size: 1.5rem;
-    border-radius: 15px;
-    padding: 7px 25px;
+    border-radius: 10px;
+    padding: 6px 25px;
     border:3px solid black;
     background: rgb(238, 89, 89);
     cursor: pointer;
