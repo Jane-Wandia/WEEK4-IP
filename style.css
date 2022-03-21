@@ -102,7 +102,7 @@ ul li a:hover{
 /*about us*/
 .about{
     width: 100%;
-    padding: 78px opx;
+    padding: 78px 0px;
     background-color: blanchedalmond;
 }
 .about img{
@@ -133,12 +133,23 @@ ul li a:hover{
     font-size: 18px;
     margin-bottom: 45px;
 }
-
+/*order form*/
+ #orders{
+     width: 100%;
+     padding: 78px 0px;
+     background-color: darkcyan;
+     
+     color: red;
+     font-size: 20px;
+     
+ }
+/*footer*/
 footer{
     padding:5px 20px;
     background: black;
     color: white;
     font-size: 1rem;
+    margin-top 100%
 }
 /*utility class*/
 .h-primary{
