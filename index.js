@@ -14,10 +14,7 @@ $(document).ready(function() {
           var pizzaCrust = document.getElementById("crust").value;
           return parseInt(pizzaCrust);
         }
-        function topping() {
-          var pizzaTopping = document.getElementById("topping").value;
-          return parseInt(pizzaTopping);
-        }
+        
         function number() {
           var pizzaNumber = document.getElementById("quantity").value;
           return parseInt(pizzaNumber);
