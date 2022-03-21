@@ -1,143 +1,58 @@
-function placeOrder() { //function for placing an order
-    //get inputs from form
-    var name = capitalize_inputs($("input#name").val());
-    var flavor = $("#pizza-flavor").val();
-    var size = $("#pizza-size").val();
-    var crust = $("#pizza-crust").val();
-    var toppings = [];
-    $.each($('input[name="toppings"]:checked'),
-        function() {
-            toppings.push($(this).val());
-        });
-    var number = $("#pizza-number").val();
-    var sizeCost; //set different prices for the different pizza flavors depending on their size
-    if (flavor === "Bbq Beef" || flavor === "Bbq Chicken" || flavor === "Hawaiian" || flavor === "Pulled Pork") {
-        if (size === "Small") {
-            sizeCost = 400;
-        } else if (size === "Medium") {
-            sizeCost = 650;
-        } else if (size === "Large") {
-            sizeCost = 900;
+$(document).ready(function() {
+    //form function to submit the users input, calculate total for the order, and prompt the user for some details
+      $("#text-center").submit(function(event) {
+        //functions to get user input from the forms
+        function flavor() {
+          var pizzaFlavour = document.getElementById("flavor").value;
+          return parseInt(pizzaFlavour);
         }
-    } else if (flavor === "Bbq Pork" || flavor === "Grilled Pork" || flavor === "Margharita" || flavor === "Marinara" || flavor === "Pepperoni") {
-        if (size === "Small") {
-            sizeCost = 450;
-        } else if (size === "Medium") {
-            sizeCost = 700;
-        } else if (size === "Large") {
-            sizeCost = 950;
+        function size() {
+          var pizzaSize = document.getElementById("size").value;
+          return parseInt(pizzaSize);
         }
-    } else if (flavor === "Chicken Tikka" || flavor === "Gamberi" || flavor === "Mushroom" || flavor === "Oyster" || flavor === "Spicy Veggie" || flavor === "Original Veggie") {
-        if (size === "Small") {
-            sizeCost = 500;
-        } else if (size === "Medium") {
-            sizeCost = 750;
-        } else if (size === "Large") {
-            sizeCost = 1100;
+        function crust() {
+          var pizzaCrust = document.getElementById("crust").value;
+          return parseInt(pizzaCrust);
         }
-    }
-    var crustCost; //set prices for different crust types
-    if (crust === "Gluten Free") {
-        crustCost = 230;
-    } else if (crust === "Hand Tossed") {
-        crustCost = 200;
-    } else if (crust === "Original") {
-        crustCost = 150;
-    } else if (crust === "Pan") {
-        crustCost = 180;
-    } else if (crust === "Stuffed") {
-        crustCost = 250;
-    } else if (crust === "Thin") {
-        crustCost = 100;
-    }
-    var checkboxes = $('input[name="toppings"]:checked').length; //get number of checkboxes checked
-    if (checkboxes <= 3) { //limit number of checkboxes allowed to not more than 3
-        if (size === "Small") {
-            var toppingsCost = checkboxes * 70;
-        } else if (size === "Medium") {
-            var toppingsCost = checkboxes * 100;
-        } else if (size === "Large") {
-            var toppingsCost = checkboxes * 130;
+        function topping() {
+          var pizzaTopping = document.getElementById("topping").value;
+          return parseInt(pizzaTopping);
         }
-        $("input[type='checkbox']:not(:checked)").prop({ //disable unchecked boxes
-            disabled: true
-        });
-        $('#placeorder').prop('disabled', true); //deactivate button after order is made to prevent client from changing order once the order is placed
-        $("#yourorder").show();
-        var price = (sizeCost + crustCost + toppingsCost);
-        var totalPrice = parseInt(price * number);
-        $(".salutation").text("Hey" + " " + name + ". Here's your order:");
-        $(".pizza-size").append('<tr><td id="pizza-size">' + size);
-        $(".number").append('<tr><td id="number">' + number);
-        $(".pizza-crust").append('<tr><td id="pizza-crust">' + crust);
-        $(".pizza-flavor").append('<tr><td id="pizza-flavor">' + flavor);
-        $(".pizzaTotal1").append('<tr><td id="pizzaTotal1">' + totalPrice);
-        arrayTotal.push(totalPrice); //create an array for all total prices
-        if (toppings == "") {
-            $(".toppings").append('<tr><td id="pizza-toppings">' + "-");
+        function number() {
+          var pizzaNumber = document.getElementById("quantity").value;
+          return parseInt(pizzaNumber);
         }
-        if (toppings != "") {
-            $(".toppings").append('<tr><td id="pizza-toppings">' + toppings);
+    
+        //a constructor to create objects/instances of a user's orders
+        function Order(flavor, size, crust, topping, quantity) {
+          this.newFlavor = flavor;
+          this.newSize = size;
+          this.newCrust = crust;
+          this.newTopping = topping;
+          this.newQuantity = quantity;
         }
-        $(".name").text(name);
-    } else {
-        document.getElementById("pizza-toppings-help").innerHTML = "Please select a maximum of 3!";
-        document.getElementById("pizza-toppings-help").style.cssText = 'color:red !important' //overrides previous color styling
-    }
-  }
-  
-  function makeDelivery() {
-    $("#deliveryConfirmation").show();
-    var location = capitalize_inputs($("input#location").val()); //get delivery details
-    var phone = $("input#phone").val();
-    $(".location").text(location);
-    $(".phone").text(phone);
-    $("#delivery").hide();
-  }
-  
-  $(document).ready(function() {
-    $("#orders").submit(function(event) {
+    
+        //an object/instance (of the above constructor) to save the users order
+        var userInput = new Order(flavor(), size(), crust(), topping(), number());
+    
+        //a variable to store the total expenditure of the user
+        var totalCost =
+          (userInput.newSize +
+            userInput.newCrust +
+            userInput.newTopping +
+            userInput.newFlavor) *
+          userInput.newQuantity;
+    
+        //prompts for the user
+        alert("Your charges for Pizza" + totalCost);
+        prompt("enter your email address");
+        prompt("enter your phone number");
+        prompt("enter your location");
+        alert("Your pizza will be delivered");
+    
+        //a method to reset the form after all operations have been completed
+        $("#text-center").reset();
+    
         event.preventDefault();
-        placeOrder();
+      });
     });
-    $("#deliveryDetails").submit(function(event) {
-        event.preventDefault();
-        makeDelivery();
-    });
-  });
-  
-  function cancelOrders() {
-    location.reload(); 
-  
-  var arrayTotal = []; 
-  
-  function deliveryOptions() {
-    $("#deliveryOptions").show();
-    $("#orderDetails").hide();
-    document.getElementById("orders").reset(); 
-    var checkoutTotal = 0;
-    arrayTotal.forEach(function(index) {
-        checkoutTotal = checkoutTotal + index;
-    });
-    $(".totalPick").text(checkoutTotal);
-    var checkoutTotalDel = checkoutTotal + 200; //add Ksh.200 to checkout total when delivery is chosen
-    $(".totalDel").text(checkoutTotalDel);
-  }
-  
-  function pickUp() {
-    $("#pickUpConfirmation").show();
-    $("#yourorder").hide();
-  }
-  
-  function deliver() {
-    $("#delivery").show();
-    $("#yourorder").hide();
-  }
-  
-  function reloadPage() {
-    location.reload(); //reload contents of page to original status
-  }
-  
-  function clearTextarea() {
-    $("#messageForm").reset(); //reset textarea inputs
-  }

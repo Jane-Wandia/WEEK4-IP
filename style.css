@@ -138,11 +138,14 @@ ul li a:hover{
      width: 100%;
      padding: 78px 0px;
      background-color: darkcyan;
-     
+
      color: red;
      font-size: 20px;
-     
- }
+}
+#orders h1{
+    display: flex;
+}
+
 /*footer*/
 footer{
     padding:5px 20px;
